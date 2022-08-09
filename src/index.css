@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;700&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif !important;
+  background-color: #f8f9d7;
+}
+
+.contact-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}

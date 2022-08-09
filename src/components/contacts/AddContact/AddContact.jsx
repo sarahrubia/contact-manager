@@ -1,9 +1,122 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 let AddContact = () => {
   return (
     <React.Fragment>
-      <h2>Add Contact</h2>
+      <section className="add-contact p-3">
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <p className="h4 text-success fw-bold">Criar novo contato</p>
+              <p className="fst-italic">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio
+                earum minima dicta similique amet totam quae quia tempora porro,
+                eum deleniti error ratione perspiciatis fugiat obcaecati magni?
+                Itaque, quas vel.
+              </p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4">
+              <form>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Nome"
+                  />
+                </div>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="URL da foto"
+                  />
+                </div>
+                <div className="mb-2">
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Número de telefone"
+                  />
+                </div>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="E-mail"
+                  />
+                </div>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Empresa"
+                  />
+                </div>
+                <div className="mb-2">
+                  <input className="form-control" placeholder="Título" />
+                </div>
+                <div className="mb-2">
+                  <select className="form-control">
+                    <option value="">Selecione</option>
+                    <option value="friends">Amigos</option>
+                    <option value="family">Família</option>
+                    <option value="work">Trabalho</option>
+                  </select>
+                </div>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="CEP"
+                  />
+                </div>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Logradouro"
+                  />
+                </div>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Bairro"
+                  />
+                </div>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Cidade"
+                  />
+                </div>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Estado"
+                  />
+                </div>
+
+                <div className="mb-2">
+                  <input
+                    type="submit"
+                    className="btn btn-success"
+                    value="Salvar"
+                  />
+                  <Link to={"/contacts/list"} className="btn btn-dark ms-2">
+                    Cancelar
+                  </Link>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
     </React.Fragment>
   );
 };
