@@ -1,7 +1,71 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ContactService } from "../../../services/ContactsService";
+import Spinner from "../../navbar/spinner/Spinner";
 
 let ContactList = () => {
+  let [state, setState] = useState({
+    loading: false,
+    contacts: [],
+    errorMessage: "",
+  });
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setState({ ...state, loading: true });
+        let response = await ContactService.getAllContacts();
+        console.log(response.data);
+        setState({
+          ...state,
+          loading: false,
+          contacts: response.data,
+        });
+      } catch (error) {
+        setState({
+          ...state,
+          loading: false,
+          errorMessage: error.message,
+        });
+      }
+    }
+    fetchData();
+  }, []);
+
+  // Delete contact
+  let clickDelete = async (contactId) => {
+    if (
+      !window.confirm(
+        "Você tem certeza que deseja excluir? Essa ação não pode ser desfeita."
+      )
+    )
+      return false;
+
+    try {
+      let response = await ContactService.deleteContact(contactId);
+      if (response) {
+        setState({ ...state, loading: true });
+        let response = await ContactService.getAllContacts();
+        console.log(response.data);
+        setState({
+          ...state,
+          loading: false,
+          contacts: response.data,
+        });
+      }
+    } catch (error) {
+      setState({
+        ...state,
+        loading: false,
+        errorMessage: error.message,
+      });
+    }
+  };
+
+  let { loading, contacts, errorMessage } = state;
+
   return (
     <React.Fragment>
       <section className="contact-search p-3">
@@ -50,121 +114,83 @@ let ContactList = () => {
           </div>
         </div>
       </section>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <React.Fragment>
+          <section className="contact-list">
+            <div className="container">
+              <div className="row">
+                {contacts.length > 0 &&
+                  contacts.map((contact) => {
+                    return (
+                      <div className="col-md-6" key={contact.id}>
+                        <div className="card my-2">
+                          <div className="card-body">
+                            <div className="row align-items-center dflex justify-content-around">
+                              <div className="col-md-4">
+                                <img
+                                  src={contact.photo}
+                                  alt="user"
+                                  className="contact-img"
+                                />
+                              </div>
+                              <div className="col-md-7">
+                                <ul className="list-group">
+                                  <li className="list-group-item list-group-item-action">
+                                    Nome:
+                                    <span className="fw-bold p-2">
+                                      {contact.name}
+                                    </span>
+                                  </li>
 
-      <section className="contact-list">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="card">
-                <div className="card-body">
-                  <div className="row align-items-center dflex justify-content-around">
-                    <div className="col-md-4">
-                      <img
-                        src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-                        alt="user"
-                        className="contact-img"
-                      />
-                    </div>
-                    <div className="col-md-7">
-                      <ul className="list-group">
-                        <li className="list-group-item list-group-item-action">
-                          Name: <span className="fw-bold p-2">Sarah</span>
-                        </li>
+                                  <li className="list-group-item list-group-item-action">
+                                    Telefone:
+                                    <span className="fw-bold p-2">
+                                      {contact.phoneNumber}
+                                    </span>
+                                  </li>
 
-                        <li className="list-group-item list-group-item-action">
-                          Telefone:
-                          <span className="fw-bold p-2">+5582987456321</span>
-                        </li>
-
-                        <li className="list-group-item list-group-item-action">
-                          E-mail:
-                          <span className="fw-bold p-2">sarah@mail.com</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="col-md-1 d-flex flex-column align-items-center">
-                      <Link
-                        to={"/contacts/view/:contactId"}
-                        className="btn btn-warning my-1"
-                      >
-                        <i className="fa fa-eye"></i>
-                      </Link>
-                      <Link
-                        to={"/contacts/edit/:contactId"}
-                        className="btn btn-primary my-1"
-                      >
-                        <i className="fa fa-pen"></i>
-                      </Link>
-                      <button
-                        to={"/contacts/view/:contactId"}
-                        className="btn btn-danger my-1"
-                      >
-                        <i className="fa fa-trash"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="col-md-1"></div>
-                </div>
+                                  <li className="list-group-item list-group-item-action">
+                                    E-mail:
+                                    <span className="fw-bold p-2">
+                                      {contact.email}
+                                    </span>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div className="col-md-1 d-flex flex-column align-items-center">
+                                <Link
+                                  to={`/contacts/view/${contact.id}`}
+                                  className="btn btn-warning my-1"
+                                >
+                                  <i className="fa fa-eye"></i>
+                                </Link>
+                                <Link
+                                  to={`/contacts/edit/${contact.id}`}
+                                  className="btn btn-primary my-1"
+                                >
+                                  <i className="fa fa-pen"></i>
+                                </Link>
+                                <button
+                                  to={`/contacts/view/${contact.id}`}
+                                  className="btn btn-danger my-1"
+                                  onClick={() => clickDelete(contact.id)}
+                                >
+                                  <i className="fa fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
-            <div className="col-md-6">
-              <div className="card">
-                <div className="card-body">
-                  <div className="row align-items-center dflex justify-content-around">
-                    <div className="col-md-4">
-                      <img
-                        src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-                        alt="user"
-                        className="contact-img"
-                      />
-                    </div>
-                    <div className="col-md-7">
-                      <ul className="list-group">
-                        <li className="list-group-item list-group-item-action">
-                          Name: <span className="fw-bold p-2">Sarah</span>
-                        </li>
-
-                        <li className="list-group-item list-group-item-action">
-                          Telefone:
-                          <span className="fw-bold p-2">+5582987456321</span>
-                        </li>
-
-                        <li className="list-group-item list-group-item-action">
-                          E-mail:
-                          <span className="fw-bold p-2">sarah@mail.com</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="col-md-1 d-flex flex-column align-items-center">
-                      <Link
-                        to={"/contacts/view/:contactId"}
-                        className="btn btn-warning my-1"
-                      >
-                        <i className="fa fa-eye"></i>
-                      </Link>
-                      <Link
-                        to={"/contacts/edit/:contactId"}
-                        className="btn btn-primary my-1"
-                      >
-                        <i className="fa fa-pen"></i>
-                      </Link>
-                      <button
-                        to={"/contacts/view/:contactId"}
-                        className="btn btn-danger my-1"
-                      >
-                        <i className="fa fa-trash"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="col-md-1"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };

@@ -1,0 +1,60 @@
+{
+  "contacts": [
+    {
+      "name": "Sarah Rúbia",
+      "photo": "https://bantusocial.b-cdn.net/system/accounts/avatars/000/001/029/original/7e5248dbf09ea7cd.jpg",
+      "phoneNumber": [
+        "31977775555"
+      ],
+      "email": [
+        "sarahrubia@mail.com"
+      ],
+      "company": "VExpenses",
+      "title": "Desenvolvedora Front-End Jr.",
+      "groupId": "3",
+      "cep": "57084146",
+      "logradouro": "Rua C",
+      "bairro": "Benedito Bentes",
+      "cidade": "Maceió",
+      "estado": "AL",
+      "id": 1
+    },
+    {
+      "name": "Isadora Cardoso",
+      "photo": "https://images.masto.donte.com.br/accounts/avatars/000/124/772/original/20299610c6e40817.png",
+      "phoneNumber": [
+        "82999998888"
+      ],
+      "email": "isadora@mail.com",
+      "company": "Zup",
+      "title": "Data Analyst",
+      "groupId": "2",
+      "cep": [
+        "57084888"
+      ],
+      "logradouro": "Rua D",
+      "bairro": "Serraria",
+      "cidade": "Maceió",
+      "estado": "AL",
+      "id": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "1",
+      "name": "Amigos"
+    },
+    {
+      "id": "2",
+      "name": "Família"
+    },
+    {
+      "id": "3",
+      "name": "Trabalho"
+    },
+    {
+      "id": "4",
+      "name": "Serviço"
+    }
+  ]
+}
